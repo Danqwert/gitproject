@@ -263,7 +263,7 @@ void myclass::print()
             A++;
     }
     for(int i=0; i<A; i++)
-        cout<<"#############";
+        cout<<"##############";
     cout<<endl;
 
 
@@ -290,7 +290,7 @@ void myclass::print()
     cout<<":";
     cout<<endl;
     for(int i=0; i<A; i++)
-        cout<<"-------------";
+        cout<<"**************";
     cout<<endl;
 
     //////
@@ -316,11 +316,11 @@ void myclass::print()
         }
         cout<<endl;
         for(int i=0; i<A; i++)
-            cout<<"_____________";
+            cout<<"______________";
         cout<<endl;
     }
     for(int i=0; i<A; i++)
-        cout<<"#############";
+        cout<<"##############";
     cout<<endl;
     cout<<endl;
 }
