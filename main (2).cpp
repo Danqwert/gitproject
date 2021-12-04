@@ -161,10 +161,15 @@ void myclass::izmenit_stroky()
     cout<<endl;
     fout2<<line<<"\n";
     string stroka;
-    while(n>0 && getline(fin1,stroka))
+    while(n>0)
     {
-        fout2 << stroka<< "\n";
+        if(getline(fin1,stroka))
+            fout2 << stroka<< "\n";
+        else
+            {cout<<"Out of range!"<<endl;
+            return;}
         n--;
+
     }
     getline(fin1,stroka);
 
@@ -210,10 +215,15 @@ void myclass::delete_string()
     fout2.open("temp.txt");
     string stroka;
 
-    while(n>0 && getline(fin1,stroka))
+    while(n>0)
     {
-        fout2 << stroka<< "\n";
+        if(getline(fin1,stroka))
+            fout2 << stroka<< "\n";
+        else
+            {cout<<"Out of range!"<<endl;
+            return;}
         n--;
+
     }
     getline(fin1,stroka);
 
