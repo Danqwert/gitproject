@@ -18,7 +18,6 @@ public:
     void help();
 };
 
-
 void myclass::create()
 {
     ofstream f;
@@ -59,7 +58,6 @@ void myclass::new_string()
     fout<<word<<"\n";
     cout<<endl;
 }
-
 
 void myclass::new_stobik()
 {
@@ -103,7 +101,7 @@ void myclass::new_stobik()
 
 void myclass::vivesti_stroky()
 {
-
+    cout<<"Vvedite nomer stroki: "<<endl;
     fstream fin;
     fin.open("file.txt");
 
@@ -111,14 +109,18 @@ void myclass::vivesti_stroky()
     cin>>n;
     string stroka;
 
-    while(getline(fin,stroka) && n>0)
+    while(n>0)
     {
-        n--;
+        if(getline(fin,stroka))
+            n--;
+        else
+            {cout<<"Out of range!"<<endl;
+            return;}
 
     }
-    if(n>0)
-        cout<<"Out of range";
-    else
+    //if(n>0)
+    //    cout<<"Out of range!"<<endl;
+
 
         for(int i=0; i<stroka.size(); i++)
         {
@@ -127,6 +129,7 @@ void myclass::vivesti_stroky()
             else
                 cout<<stroka[i];
         }
+        cout<<endl;
 
 }
 
@@ -347,9 +350,6 @@ int main()
     cout<<"| |  | | |____| |____| |___| |__| |"<<endl;
     cout<<"|_|  |_|______|______|______\\____/" <<endl;
 
-
-
-
     myclass myobj;
     myobj.create();
     myobj.help();
@@ -378,6 +378,4 @@ int main()
         if(n==7)
             myobj.help();
     }
-
-
 }
