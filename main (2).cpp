@@ -3,6 +3,7 @@
 #include <string>
 using namespace std;
 
+int NN;
 
 class myclass
 {
@@ -16,13 +17,15 @@ public:
     void delete_string();
     void print();
     void help();
+    void marktable();
 };
 
 void myclass::create()
 {
+    NN=1;
     ofstream f;
     f.open("file.txt");
-    f<<"Name,Familia,Otchestvo,vozrast,clas\n";
+    f<<"ID,Name,Familia,Otchestvo,vozrast,clas\n";
     f.close();
 }
 
@@ -36,7 +39,8 @@ void myclass::new_string()
     getline(fin,line);
     int a=0;
     cout<<"Vvedite cherez probel: ";
-    for(int i=0; i<line.size(); i++)
+
+    for(int i=line.find(',')+1; i<line.size(); i++)
     {
         if(line[i]==',')
         {
@@ -48,6 +52,7 @@ void myclass::new_string()
     }
     cout<<endl;
 
+    fout<<NN<<',';
     while(a>0)
     {
         cin>>word;
@@ -57,6 +62,7 @@ void myclass::new_string()
     cin>>word;
     fout<<word<<"\n";
     cout<<endl;
+    NN++;
 }
 
 void myclass::new_stobik()
@@ -105,31 +111,36 @@ void myclass::vivesti_stroky()
     fstream fin;
     fin.open("file.txt");
 
-    int n;
+    string n;
+    string num;
     cin>>n;
     string stroka;
 
+    /*
     while(n>0)
     {
         if(getline(fin,stroka))
             n--;
         else
-            {cout<<"Out of range!"<<endl;
-            return;}
+        {
+            cout<<"Out of range!"<<endl;
+            return;
+        }
 
-    }
+    }*/
     //if(n>0)
     //    cout<<"Out of range!"<<endl;
+    while(n!=stroka.substr(0,stroka.find(',')))
+        getline(fin,stroka);
 
-
-        for(int i=0; i<stroka.size(); i++)
-        {
-            if(stroka[i]==',')
-                cout<<" ";
-            else
-                cout<<stroka[i];
-        }
-        cout<<endl;
+    for(int i=0; i<stroka.size(); i++)
+    {
+        if(stroka[i]==',')
+            cout<<" ";
+        else
+            cout<<stroka[i];
+    }
+    cout<<endl;
 
 }
 
@@ -151,7 +162,8 @@ void myclass::izmenit_stroky()
     getline(fin1,line);
     int a=0;
     cout<<"Vvedite cherez probel: ";
-    for(int i=0; i<line.size(); i++)
+
+    for(int i=line.find(',')+1; i<line.size(); i++)
     {
         if(line[i]==',')
         {
@@ -169,13 +181,18 @@ void myclass::izmenit_stroky()
         if(getline(fin1,stroka))
             fout2 << stroka<< "\n";
         else
-            {cout<<"Out of range!"<<endl;
-            return;}
+        {
+            cout<<"Out of range!"<<endl;
+            return;
+        }
         n--;
 
     }
     getline(fin1,stroka);
 
+    stroka=stroka.substr(0,stroka.find(','));
+    fout2<<stroka<<',';
+    //cout<<stroka;
     string word;
     while(a>=0)
     {
@@ -218,13 +235,19 @@ void myclass::delete_string()
     fout2.open("temp.txt");
     string stroka;
 
+    int YY=0;
+
     while(n>0)
     {
         if(getline(fin1,stroka))
-            fout2 << stroka<< "\n";
+            {fout2 << stroka<< "\n";
+            YY++;
+            }
         else
-            {cout<<"Out of range!"<<endl;
-            return;}
+        {
+            cout<<"Out of range!"<<endl;
+            return;
+        }
         n--;
 
     }
@@ -232,7 +255,12 @@ void myclass::delete_string()
 
     while(getline(fin1,stroka))
     {
-        fout2 << stroka<< "\n";
+        int i=0;
+        while(stroka[i]!=',')
+            i++;
+        stroka=stroka.erase(0,i);
+        fout2 <<YY<< stroka<< "\n";
+        YY++;
     }
 
     fout2.close();
@@ -247,6 +275,8 @@ void myclass::delete_string()
         fout1 << stroka<< "\n";
     }
     fout1.close();
+
+    NN=NN-1;
 }
 
 void myclass::print()
@@ -340,6 +370,55 @@ void myclass::help()
     cout<<"0 - exit"<<endl;
 }
 
+void myclass::marktable(){ //in developing
+    ofstream fout;
+    fstream fin;
+    fin.open("marks.txt");
+    string line;
+    getline(fin,line);
+    int a=0;
+
+    cout<<"Vvedite nomer predmeta: "<<endl;
+    int n1;
+    cin>>n1;
+    cout<<"Vvedite nomer ychenica: "<<endl;
+    int n2;
+    cin>>n2;
+    fout.open("temp1.txt");
+    fout<<line;
+    while(n2>0)
+        {getline(fin, line);
+        n2--;}
+    string line1;
+    getline(cin, line1);
+    getline(fin,line);
+    int k =0;
+
+    while(n1>0)
+    {
+	fout<<line[a]<<endl;
+	a++;
+	if(line[a]==';')
+		n1--;
+
+    }
+    a++;
+    while(line[a]!=';')
+		a++;
+
+    for(int i=0;i<line1.size();i++)
+    {
+		if(line1[i]==' ')
+			fout<<',';
+		else
+			fout<<line1[i];
+	}
+
+	//for(int i=a;a<line.size();a++)
+
+
+}
+
 int main()
 {
 
@@ -377,5 +456,7 @@ int main()
             myobj.print();
         if(n==7)
             myobj.help();
+        if(n==8)
+            myobj.marktable();
     }
 }
