@@ -17,7 +17,6 @@ public:
     void delete_string();
     void print();
     void help();
-    void marktable();
     void new_predmet();
     void new_mark();
     void print_marks();
@@ -197,7 +196,6 @@ void myclass::vivesti_stroky()
             cout<<"Out of range!"<<endl;
             return;
         }
-
     }*/
     //if(n>0)
     //    cout<<"Out of range!"<<endl;
@@ -298,6 +296,7 @@ void myclass::delete_string()
     int n;
     cout<<"Vvedite nomer stroki dlya ydalenia: "<<endl;
     cin>>n;
+    int nnn=n;
     //n=n-1;
 
     fstream fin1;
@@ -349,6 +348,60 @@ void myclass::delete_string()
     fout1.close();
 
     NN=NN-1;
+
+    ////////////
+
+    fstream fin3;
+    ofstream fout3;
+    fin3.open("marks.txt");
+    fout3.open("temp2.txt");
+
+
+    YY=0;
+    n=nnn;
+    while(n>0)
+    {
+        if(getline(fin3,stroka))
+        {
+            fout3 << stroka<< "\n";
+            YY++;
+        }
+        else
+        {
+            cout<<"Out of range!"<<endl;
+            return;
+        }
+        n--;
+
+    }
+    getline(fin3,stroka);
+
+    while(getline(fin3,stroka))
+    {
+        int i=0;
+        while(stroka[i]!=',')
+            i++;
+        stroka=stroka.erase(0,i);
+        fout3 <<YY<< stroka<< "\n";
+        YY++;
+    }
+
+    fout3.close();
+
+    fstream fin4;
+    fin4.open("temp2.txt");
+    ofstream fout4;
+    fout4.open("marks.txt");
+
+    while(getline(fin4,stroka))
+    {
+        fout4 << stroka<< "\n";
+    }
+    fout4.close();
+
+
+
+
 }
 
 void myclass::print()
@@ -447,7 +500,7 @@ void myclass::print_marks()
             A++;
     }
     for(int i=0; i<A; i++)
-        cout<<"################";
+        cout<<"##################";
     cout<<endl;
 
 
@@ -474,7 +527,7 @@ void myclass::print_marks()
     cout<<":";
     cout<<endl;
     for(int i=0; i<A; i++)
-        cout<<"****************";
+        cout<<"******************";
     cout<<endl;
 
     //////
@@ -500,11 +553,11 @@ void myclass::print_marks()
         }
         cout<<endl;
         for(int i=0; i<A; i++)
-            cout<<"________________";
+            cout<<"__________________";
         cout<<endl;
     }
     for(int i=0; i<A; i++)
-        cout<<"################";
+        cout<<"##################";
     cout<<endl;
     cout<<endl;
 }
@@ -518,60 +571,13 @@ void myclass::help()
     cout<<"5 - delete string by string number"<<endl;
     cout<<"6 - print table"<<endl;
     cout<<"7 - print help"<<endl;
+    cout<<"8 - Vvesti otsenki po nomery ychenica i predmeta"<<endl;
+    cout<<"9 - Dobavit new predmet v marks table"<<endl;
+    cout<<"10 - print marks table"<<endl;
     cout<<"0 - exit"<<endl;
 }
 
-void myclass::marktable()  //in developing
-{
-    ofstream fout;
-    fstream fin;
-    fin.open("marks.txt");
-    string line;
-    getline(fin,line);
-    int a=0;
 
-    cout<<"Vvedite nomer predmeta: "<<endl;
-    int n1;
-    cin>>n1;
-    cout<<"Vvedite nomer ychenica: "<<endl;
-    int n2;
-    cin>>n2;
-    fout.open("temp1.txt");
-    fout<<line;
-    while(n2>0)
-    {
-        getline(fin, line);
-        n2--;
-    }
-    string line1;
-    getline(cin, line1);
-    getline(fin,line);
-    int k=0;
-
-    while(n1>0)
-    {
-        fout<<line[a]<<endl;
-        a++;
-        if(line[a]==';')
-            n1--;
-
-    }
-    a++;
-    while(line[a]!=';')
-        a++;
-
-    for(int i=0; i<line1.size(); i++)
-    {
-        if(line1[i]==' ')
-            fout<<',';
-        else
-            fout<<line1[i];
-    }
-
-    //for(int i=a;a<line.size();a++)
-
-
-}
 
 void myclass::new_mark()
 {
@@ -699,12 +705,10 @@ int main()
         if(n==7)
             myobj.help();
         if(n==8)
-            myobj.marktable();
+            myobj.new_mark();
         if(n==9)
             myobj.new_predmet();
         if(n==10)
-            myobj.new_mark();
-        if(n==11)
             myobj.print_marks();
     }
 }
