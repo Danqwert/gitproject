@@ -32,7 +32,7 @@ void myclass::create()
 
     ofstream f1;
     f1.open("marks.txt");
-    f1<<"ID,1_Physics,2_Math,3_Computer_science\n";
+    f1<<"ID;1_Physics;2_Math;3_Computer_science\n";
     f1.close();
 }
 
@@ -78,14 +78,14 @@ void myclass::new_string()
     getline(fin2,line);
     fout2.open("marks.txt",ios::out | ios::app);
     fout2<<NN-1;
-    for(int i=line.find(',')+1; i<line.size(); i++)
+    for(int i=line.find(';')+1; i<line.size(); i++)
     {
-        if(line[i]==',')
+        if(line[i]==';')
         {
-            fout2<<",NAN";
+            fout2<<";NAN";
         }
     }
-    fout2<<",NAN";
+    fout2<<";NAN";
     fout2<<"\n";
 
 }
@@ -147,16 +147,16 @@ void myclass::new_predmet()
     //line.erase(line.end()-2, line.end());
     int a=0;
     for(int i=0; i<line.size(); i++)
-        if(line[i]==',')
+        if(line[i]==';')
             a++;
     a++;
 
     // string line1=line+","+a+"_"+name+"\n";
-    fout2<<line<<","<<a<<"_"<<name<<"\n";
+    fout2<<line<<";"<<a<<"_"<<name<<"\n";
 
     while(getline(fin1,line))
     {
-        fout2 << line <<",NAN"<< "\n";
+        fout2 << line <<";NAN"<< "\n";
     }
 
     fout2.close();
@@ -496,7 +496,7 @@ void myclass::print_marks()
     //cout<<line;
     for(int i=0; i<line.size(); i++)
     {
-        if(line[i]==',')
+        if(line[i]==';')
             A++;
     }
     for(int i=0; i<A; i++)
@@ -510,7 +510,7 @@ void myclass::print_marks()
     for(int i=0; i<line.size(); i++)
     {
         a++;
-        if(line[i]==',')
+        if(line[i]==';')
         {
             cout<<":";
             while(12-a>0)
@@ -538,7 +538,7 @@ void myclass::print_marks()
         for(int i=0; i<line.size(); i++)
         {
             a++;
-            if(line[i]==',')
+            if(line[i]==';')
             {
                 while(13-a>0)
                 {
@@ -601,7 +601,7 @@ void myclass::new_mark()
     getline(fin1,line);
     int a=0;
     for(int i=0; i<line.size(); i++)
-        if(line[i]==',')
+        if(line[i]==';')
             a++;
     a++;
     int oc;
@@ -629,20 +629,30 @@ void myclass::new_mark()
     int y=0;
     for(int i=0;y<st;i++){
     fout2<<stroka[i];
-    if(stroka[i]==',')
+    if(stroka[i]==';')
         y++;
     }
 
 
-    fout2<<oc;
+    float sum=0;
+    int l=0;
+    while(oc>0){
+        sum=sum+oc%10;
+        oc=oc/10;
+        l++;
+    }
+    float o=sum/l;
+    fout2<<o;
+
 
     int ll=0;
     for(int i=0;i<stroka.size();i++){
-        if(stroka[i]==',')
+        if(stroka[i]==';')
         ll++;
         if(ll>y)
         fout2<<stroka[i];
     }
+
     fout2<<"\n";
 
     while(getline(fin1,stroka))
